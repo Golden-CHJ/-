@@ -1,262 +1,429 @@
 <!doctype html>
 <html lang="en" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta http-equiv="Content-Language" content="en" />
-  <meta name="msapplication-TileColor" content="#2d89ef">
-  <meta name="theme-color" content="#4188c9">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <!--<link rel="icon" href="./favicon.ico" type="image/x-icon"/>-->
-  <!--<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />-->
-  <!-- Generated: 2018-04-06 16:27:42 +0200 -->
-  <title>在线打印</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./src/font.css">  <script src="./assets/js/require.min.js"></script>
-  <script>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#4188c9">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <!--<link rel="icon" href="./favicon.ico" type="image/x-icon"/>-->
+    <!--<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />-->
+    <!-- Generated: 2018-04-06 16:27:42 +0200 -->
+    <title>在线打印</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">-->
+    <link rel="stylesheet" href="./src/font.css">
+    <script src="./assets/js/require.min.js"></script>
+    <script>
       requirejs.config({
           baseUrl: '.'
       });
-  </script>
-  <!-- Dashboard Core -->
-  <link href="./assets/css/dashboard.css" rel="stylesheet" />
-  <script src="./assets/js/dashboard.js"></script>
-  <!-- c3.js Charts Plugin -->
-  <link href="./assets/plugins/charts-c3/plugin.css" rel="stylesheet" />
-  <script src="./assets/plugins/charts-c3/plugin.js"></script>
-  <!-- Google Maps Plugin -->
-  <link href="./assets/plugins/maps-google/plugin.css" rel="stylesheet" />
-  <script src="./assets/plugins/maps-google/plugin.js"></script>
-  <!-- Input Mask Plugin -->
-  <script src="./assets/plugins/input-mask/plugin.js"></script>
-</head>
-<body class="">
-<div class="page">
-  <div class="page-main">
-    <div class="header py-4">
-      <div class="container">
-        <div class="d-flex">
-          <a class="header-brand" href="./index.html">
-            在线打印
-          </a>
-          <div class="d-flex order-lg-2 ml-auto">
-
-            <div class="dropdown d-none d-md-flex">
-              <a class="nav-link icon" data-toggle="dropdown">
-                <i class="fe fe-bell"></i>
-                <span class="nav-unread"></span>
+    </script>
+    <!-- Dashboard Core -->
+    <link href="./assets/css/dashboard.css" rel="stylesheet" />
+    <script src="./assets/js/dashboard.js"></script>
+    <!-- c3.js Charts Plugin -->
+    <link href="./assets/plugins/charts-c3/plugin.css" rel="stylesheet" />
+    <script src="./assets/plugins/charts-c3/plugin.js"></script>
+    <!-- Google Maps Plugin -->
+    <link href="./assets/plugins/maps-google/plugin.css" rel="stylesheet" />
+    <script src="./assets/plugins/maps-google/plugin.js"></script>
+    <!-- Input Mask Plugin -->
+    <script src="./assets/plugins/input-mask/plugin.js"></script>
+  </head>
+  <body class="">
+    <div class="page">
+      <div class="page-main">
+        <div class="header py-4">
+          <div class="container">
+            <div class="d-flex">
+              <a class="header-brand" href="./index.html">
+                在线打印
               </a>
+              <div class="d-flex order-lg-2 ml-auto">
 
-            </div>
-            <div class="dropdown">
-              <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
-                <span class="ml-2 d-none d-lg-block">
+                <div class="dropdown d-none d-md-flex">
+                  <a class="nav-link icon" data-toggle="dropdown">
+                    <i class="fe fe-bell"></i>
+                    <span class="nav-unread"></span>
+                  </a>
+
+                </div>
+                <div class="dropdown">
+                  <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                    <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
+                    <span class="ml-2 d-none d-lg-block">
                       <span class="text-default">CHJ</span>
                       <small class="text-muted d-block mt-1">地址：福州大学生活一区8号楼一层</small>
                     </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <a class="dropdown-item" href="#">
+                      <i class="dropdown-icon fe fe-settings"></i> 设置
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <span class="float-right"><span class="badge badge-primary">6</span></span>
+                      <i class="dropdown-icon fe fe-mail"></i> 信息
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                      <i class="dropdown-icon fe fe-log-out" onclick="quit()"></i> 退出当前用户
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
+                <span class="header-toggler-icon"></span>
               </a>
-              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                <a class="dropdown-item" href="#">
-                  <i class="dropdown-icon fe fe-settings"></i> 设置
-                </a>
+            </div>
+          </div>
+        </div>
+        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg order-lg-first">
+                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                  <li class="nav-item">
+                    <a href="./index.html" class="nav-link active"><i class="fe fe-home"></i> 首页</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="./empty.html" class="nav-link "><i class="fe fe-home"></i> 历史订单</a>
+                  </li>
 
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">
-                  <i class="dropdown-icon fe fe-log-out" onclick="quit()"></i> 退出当前用户
-                </a>
+                  <li class="nav-item dropdown">
+                    <a href="#" class="nav-link " onclick="quit()"><i class="fe fe-home"></i>退出当前用户</a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-          <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
-            <span class="header-toggler-icon"></span>
-          </a>
         </div>
-      </div>
-    </div>
-    <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg order-lg-first">
-            <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link "><i class="fe fe-home"></i> 首页</a>
-              </li>
-              <li class="nav-item">
-                <a href="./empty.html" class="nav-link  active"><i class="fe fe-home"></i> 历史订单</a>
-              </li>
-
-              <li class="nav-item dropdown">
-                <a href="./index.html" class="nav-link "><i class="fe fe-home"></i>退出当前用户</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="my-3 my-md-5">
-      <div class="container">
-        <div class="page-header">
-          <h1 class="page-title">
-            历史订单
-          </h1>
-
-        </div>
-          <div class="form-group" >
+        <div class="my-3 my-md-5">
+          <div class="container">
+            <div class="page-header">
+              <h1 class="page-title">
+                今日订单
+              </h1>
+            </div>
+            <div class="form-group" >
               <div class="selectgroup w-20">
-                  <label class="selectgroup-item ">
-                      <input type="radio" name="value" value="2" class="selectgroup-input active" checked="" onclick="hasFinsh()">
-                      <span class="selectgroup-button ">已完成的订单</span>
-                  </label>
-                  <label class="selectgroup-item">
-                      <input type="radio" name="value" value="1" class="selectgroup-input" onclick="noFinsh()">
-                      <span class="selectgroup-button ">尚未支付的订单</span>
-                  </label>
+                <label class="selectgroup-item ">
+                  <input type="radio" name="value" value="2" class="selectgroup-input active" checked="" onclick="hasFinsh()">
+                  <span class="selectgroup-button ">已完成的订单</span>
+                </label>
+                <label class="selectgroup-item">
+                  <input type="radio" name="value" value="1" class="selectgroup-input" onclick="noFinsh()">
+                  <span class="selectgroup-button ">尚未支付的订单</span>
+                </label>
 
               </div>
-          </div>
-        <div class="col-12">
-          <div class="card">
-
-            <div class="table-responsive">
-              <table class="table card-table table-vcenter text-nowrap">
-                <thead>
-                <tr>
-                  <th class="w-1">订单号</th>
-                  <th>打印材料名称</th>
-                  <th>客户联系方式</th>
-                  <th>学校</th>
-                  <th>打印份数</th>
-                  <th>时间</th>
-                  <th>订单状态</th>
-                  <th>订单金额（元）</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody id="list">
-                <tr>
-                  <td><span class="text-muted">00001</span></td>
-                  <td><a href="invoice.html" class="text-inherit">高等语文</a></td>
-                  <td>
-                   13067390466
-                  </td>
-                  <td>
-                    福州大学
-                  </td>
-                  <td>
-                   3
-                  </td>
-                  <td>
-                   2017-8-19
-                  </td>
-                  <td>
-                    <span class="status-icon bg-success"></span> 已完成
-                  </td>
-                  <td>3.7</td>
-                </tr>
-                <tr>
-                  <td><span class="text-muted">00002</span></td>
-                  <td><a href="invoice.html" class="text-inherit">Linux 内核运维</a></td>
-                  <td>
-                    18350855555
-                  </td>
-                  <td>
-                   福建师范大学
-                  </td>
-                  <td>
-                    2
-                  </td>
-                  <td>
-                    2018-9-7
-                  </td>
-                  <td>
-                    <span class="status-icon bg-warning"></span> 交易尚未完成
-                  </td>
-                  <td>75.5</td>
-
-                </tr>
-                <tr>
-                  <td><span class="text-muted">00003</span></td>
-                  <td><a href="invoice.html" class="text-inherit">黑客技术：从入门到入狱</a></td>
-                  <td>
-                    36666646
-                  </td>
-                  <td>
-                    南方小青花
-                  </td>
-                  <td>
-                    20
-                  </td>
-                  <td>
-                   2018-9-9
-                  </td>
-                  <td>
-                    <span class="status-icon bg-secondary"></span> 订单取消
-                  </td>
-                  <td>55.5</td>
-                </tr>
-                </tbody>
-              </table>
+              <div class="form-group col-lg-6">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="输入订单号完成订单" id="fin1">
+                  <span class="input-group-append">
+                              <button class="btn btn-primary" type="button" id="fin" onclick="fin()">完成订单</button>
+                            </span>
+                </div>
+              </div>
             </div>
+            <div class="row row-cards">
+              <div class="col-6 col-sm-4 col-lg-3">
+                <div class="card">
+                  <div class="card-body p-3 text-center">
+                    <div class="h1 m-0" style="color: #2bcbba" id="t_d">5</div>
+                    <div class="text-muted mb-4" >今日单数</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-sm-4 col-lg-2">
+                <div class="card">
+                  <div class="card-body p-3 text-center">
+                    <div class="h1 m-0" style="color: #2bcbba" id="d">5</div>
+                    <div class="text-muted mb-4" id="d1" >已完成单数</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-sm-4 col-lg-2">
+                <div class="card">
+                  <div class="card-body p-3 text-center">
+                    <div class="h1 m-0" style="color: #5eba00" id="t_m">66.66</div>
+                    <div class="text-muted mb-4" >今日收益（元）</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-sm-4 col-lg-2">
+                <div class="card">
+                  <div class="card-body p-3 text-center">
+
+                    <div class="h1 m-0" style="color: #2bcbba">5750</div>
+                    <div class="text-muted mb-4">总单数</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-sm-4 col-lg-3">
+                <div class="card">
+                  <div class="card-body p-3 text-center">
+                    <div class="h1 m-0" style="color: #5eba00">16833</div>
+                    <div class="text-muted mb-4">总收益（元）</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row row-cards row-deck">
+              <div class="col-lg-12" id="list">
+                <!--<div class="card card-aside">-->
+                  <!--<a href="#" class="card-aside-column" style="background-image: url(./demo/photos/david-klaasen-54203-500.jpg)"></a>-->
+                  <!--<div class="card-body d-flex flex-column">-->
+                    <!--<h4><a href="#">文件名：高数历年卷A</a></h4>-->
+                    <!--<h4>学 校：福州大学附属中学附属小学附属幼儿园</h4>-->
+                    <!--<h4>联系方式：13067390466</h4>-->
+                    <!--<h4>份数：3</h4>-->
+                    <!--<div class="text-muted">备注：不要香菜</div>-->
+                    <!--<div class="d-flex align-items-center pt-5 mt-auto">-->
+                      <!--&lt;!&ndash;<div class="avatar avatar-md mr-3" ></div>&ndash;&gt;-->
+                      <!--<div>-->
+                        <!--<i class="fe fe-check text-success mr-2" aria-hidden="true"></i>需要配送-->
+                        <!--<i class="fe fe-x text-danger mr-2" aria-hidden="true"></i>未完成-->
+                        <!--<small class="d-block text-muted">1小时前</small>-->
+                      <!--</div>-->
+                      <!--<div class="ml-auto text-muted">-->
+                        <!--<div class="display-2 my-2" style="color: #5eba00">6.8元</div>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              </div>
+
+            </div>
+
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8">
+      <div class="footer">
+        <div class="container">
           <div class="row">
-            <div class="col-6 col-md-6">
-              <ul class="list-unstyled mb-0">
-                <li><a href="#">期末考啦</a></li>
-                <li><a href="#">智慧校园</a></li>
-              </ul>
-            </div>
-            <div class="col-6 col-md-6">
-              <ul class="list-unstyled mb-0">
-                <li><a href="#">微信小程序</a></li>
-                <li><a href="#">福大官网</a></li>
-              </ul>
-            </div>
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-6 col-md-6">
+                  <ul class="list-unstyled mb-0">
+                    <li><a href="#">期末考啦</a></li>
+                    <li><a href="#">智慧校园</a></li>
+                  </ul>
+                </div>
+                <div class="col-6 col-md-6">
+                  <ul class="list-unstyled mb-0">
+                    <li><a href="#">微信小程序</a></li>
+                    <li><a href="#">福大官网</a></li>
+                  </ul>
+                </div>
 
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-  <footer class="footer">
-    <div class="container">
-      <div class="row align-items-center flex-row-reverse">
-        <div class="col-auto ml-lg-auto">
-          <div class="row align-items-center">
-            <div class="col-auto">
-              <ul class="list-inline list-inline-dots mb-0">
-                <li class="list-inline-item"><a href="./faq.html">需要帮助？</a></li>
-              </ul>
+              </div>
             </div>
 
           </div>
         </div>
-        <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
-          Copyright &copy; 2018 CHJ All rights reserved. Power by Tabler
-        </div>
       </div>
+      <footer class="footer">
+        <div class="container">
+          <div class="row align-items-center flex-row-reverse">
+            <div class="col-auto ml-lg-auto">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <ul class="list-inline list-inline-dots mb-0">
+                    <li class="list-inline-item"><a href="#">需要帮助？</a></li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
+              Copyright &copy; 2018 CHJ All rights reserved. Power by Tabler
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-  </footer>
-</div>
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-<script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript">
+      $.ajax({
+            url: "http://120.77.32.233/print/shop/list/order/1/0/1",
+            type: "POST",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            dataType: 'json',
+            success: function (data) {
+                //alert("成功")
+            },
+            error: function (data) {
+               // alert("失败");
+            },
+            complete: function (data) {
+                var data1 = $.parseJSON(data.responseText)
+                var div = document.getElementById("list");
+                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+                for (i = 0; i < data1.data.size; i++) {
+                    var text = " <div class=\"card card-aside\">\n" +
+                        "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(./demo/photos/david-klaasen-54203-500.jpg)\"></a>\n" +
+                        "                  <div class=\"card-body d-flex flex-column\">\n" +
+                        "                    <h4><a href=\"#\">文件名："+data1.data.list[i].file.name+
+                        "</a></h4>\n" +
+                        "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
+                        "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
+                        "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                        "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
+                        "                    <div class=\"text-muted\">文件大小："+data1.data.list[i].file.size+"</div>\n" +
+                        "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+                        "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+                        "                      <div>\n" +
+                        "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+                        "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>已完成\n" +
+                        "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.createTime+"</small>\n" +
+                        "                      </div>\n" +
+                        "                      <div class=\"ml-auto text-muted\">\n" +
+                        "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                        "                      </div>\n" +
+                        "                    </div>\n" +
+                        "                  </div>\n" +
+                        "                </div>"
+
+                    $('#list').append(text);
+                }
+                document.getElementById('t_d').innerText=data1.data.size;
+                document.getElementById('d').innerText=data1.data.size;
+                document.getElementById('t_m').innerText=data1.data.sum  ;
+
+            }
+
+        });
+      function hasFinsh () {
+          $.ajax({
+              url: "http://120.77.32.233/print/shop/list/order/1/0/1",
+              type: "POST",
+              xhrFields: {
+                  withCredentials: true
+              },
+              crossDomain: true,
+              dataType: 'json',
+              success: function (data) {
+                  //alert("成功")
+              },
+              error: function (data) {
+                  // alert("失败");
+              },
+              complete: function (data) {
+                  var data1 = $.parseJSON(data.responseText)
+                  var div = document.getElementById("list");
+                  while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                  {
+                      div.removeChild(div.firstChild);
+                  }
+                  for (i = 0; i < data1.data.size; i++) {
+                      var text = " <div class=\"card card-aside\">\n" +
+                          "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(./demo/photos/david-klaasen-54203-500.jpg)\"></a>\n" +
+                          "                  <div class=\"card-body d-flex flex-column\">\n" +
+                          "                    <h4><a href=\"#\">文件名："+data1.data.list[i].file.name+
+                          "</a></h4>\n" +
+                          "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
+                          "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
+                          "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                          "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
+                          "                    <div class=\"text-muted\">文件大小："+data1.data.list[i].file.size+"</div>\n" +
+                          "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+                          "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+                          "                      <div>\n" +
+                          "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+                          "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>已完成\n" +
+                          "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.createTime+"</small>\n" +
+                          "                      </div>\n" +
+                          "                      <div class=\"ml-auto text-muted\">\n" +
+                          "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                          "                      </div>\n" +
+                          "                    </div>\n" +
+                          "                  </div>\n" +
+                          "                </div>"
+
+                      $('#list').append(text);
+                  }
+                  document.getElementById('t_d').innerText=data1.data.size;
+                  document.getElementById('d').innerText=data1.data.size;
+                  document.getElementById('t_m').innerText=data1.data.sum  ;
+
+              }
+
+          })
+      }
+      function noFinsh(){
+          $.ajax({
+              url: "http://120.77.32.233/print/shop/list/order/0/0/1",
+              type: "POST",
+              xhrFields: {
+                  withCredentials: true
+              },
+              crossDomain: true,
+              dataType: 'json',
+              success: function (data) {
+                 // alert("成功")
+              },
+              error: function (data) {
+                  //alert("失败");
+              },
+              complete: function (data) {
+                  var data1 = $.parseJSON(data.responseText)
+                  var div = document.getElementById("list");
+                  while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                  {
+                      div.removeChild(div.firstChild);
+                  }
+                  for (i = 0; i < data1.data.size; i++) {
+                      var text = " <div class=\"card card-aside\">\n" +
+                          "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(timg.jpg)\"></a>\n" +
+                          "                  <div class=\"card-body d-flex flex-column\">\n" +
+                          "                    <h4><a href=\"#\">文件名："+data1.data.list[i].file.name+
+                          "</a></h4>\n" +
+                          "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
+                          "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
+                          "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                          "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
+                          "                    <div class=\"text-muted\">文件大小："+data1.data.list[i].file.size+"</div>\n" +
+                          "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+                          "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+                          "                      <div>\n" +
+                          "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+                          "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+                          "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.createTime+"</small>\n" +
+                          "                      </div>\n" +
+                          "                      <div class=\"ml-auto text-muted\">\n" +
+                          "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                          "                      </div>\n" +
+                          "                    </div>\n" +
+                          "                  </div>\n" +
+                          "                </div>"
+
+                      $('#list').append(text);
+                  }
+                  document.getElementById('d').innerText=data1.data.size;
+                  document.getElementById('d1').innerText="未完成单数";
+
+
+              }
+
+          });
+      }
+function fin() {
+          a=document.getElementById('fin1').value;
     $.ajax({
-        url: "http://120.77.32.233/print/shop/list/order/1/0/0",
+        url: "http://120.77.32.233/print/order/accomplish/"+a,
         type: "POST",
         xhrFields: {
             withCredentials: true
@@ -270,165 +437,41 @@
             // alert("失败");
         },
         complete: function (data) {
-            var data1 = $.parseJSON(data.responseText)
-            var div = document.getElementById("list");
-            while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
-            {
-                div.removeChild(div.firstChild);
+            var data1 = $.parseJSON(data.responseText);
+            if(data1.error_code==0){
+                alert("订单完成");
             }
-            for (i = 0; i < data1.data.size; i++) {
-                var text=" <tr>\n" +
-                    "                  <td><span class=\"text-muted\">"+data1.data.list[i].file.id+"</span></td>\n" +
-                    "                  <td><a href=\"invoice.html\" class=\"text-inherit\">"+data1.data.list[i].file.name+"</a></td>\n" +
-                    "                  <td>\n" +
-                                       data1.data.list[i].orderinfo.phone  +
-                    "                  </td>\n" +
-                    "                  <td>\n" +
-                    data1.data.list[i].orderinfo.college  +
-                    "                  </td>\n" +
-                    "                  <td>\n" +
-                    data1.data.list[i].orderinfo.num  +
-                    "                  </td>\n" +
-                    "                  <td>\n" +
-                    data1.data.list[i].orderinfo.createTime  +
-                    "                  </td>\n" +
-                    "                  <td>\n" +
-                    "                    <span class=\"status-icon bg-success\"></span> 已完成\n" +
-                    "                  </td>\n" +
-                    "                  <td>"+ data1.data.list[i].orderinfo.price+"</td>\n" +
-                    "                </tr>"
-
-                $('#list').append(text);
+            else{
+                alert("订单完成失败")
             }
 
         }
 
     });
-    function hasFinsh () {
-        $.ajax({
-            url: "http://120.77.32.233/print/shop/list/order/1/0/0",
-            type: "POST",
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            dataType: 'json',
-            success: function (data) {
-                //alert("成功")
-            },
-            error: function (data) {
-                //alert("失败");
-            },
-            complete: function (data) {
-                var data1 = $.parseJSON(data.responseText)
-                var div = document.getElementById("list");
-                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
-                {
-                    div.removeChild(div.firstChild);
-                }
-                for (i = 0; i < data1.data.size; i++) {
-                    var text=" <tr>\n" +
-                        "                  <td><span class=\"text-muted\">"+data1.data.list[i].file.id+"</span></td>\n" +
-                        "                  <td><a href=\"invoice.html\" class=\"text-inherit\">"+data1.data.list[i].file.name+"</a></td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.phone  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.college  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.num  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.createTime  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        "                    <span class=\"status-icon bg-success\"></span> 已完成\n" +
-                        "                  </td>\n" +
-                        "                  <td>"+ data1.data.list[i].orderinfo.price+"</td>\n" +
-                        "                </tr>"
-
-                    $('#list').append(text);
-                }
-
-            }
-
-        });
-    }
-    function noFinsh(){
-        $.ajax({
-            url: "http://120.77.32.233/print/shop/list/order/0/1/0",
-            type: "POST",
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            dataType: 'json',
-            success: function (data) {
-                // alert("成功")
-            },
-            error: function (data) {
-                //alert("失败");
-            },
-            complete: function (data) {
-                var data1 = $.parseJSON(data.responseText)
-                var div = document.getElementById("list");
-                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
-                {
-                    div.removeChild(div.firstChild);
-                }
-                for (i = 0; i < data1.data.size; i++) {
-                    var text=" <tr>\n" +
-                        "                  <td><span class=\"text-muted\">"+data1.data.list[i].file.id+"</span></td>\n" +
-                        "                  <td><a href=\"invoice.html\" class=\"text-inherit\">"+data1.data.list[i].file.name+"</a></td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.phone  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.college  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.num  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.createTime  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        "                    <span class=\"status-icon bg-danger\"></span>未完成\n" +
-                        "                  </td>\n" +
-                        "                  <td>"+ data1.data.list[i].orderinfo.price+"</td>\n" +
-                        "                </tr>"
-                    $('#list').append(text);
-                }
-
-            }
-
-        });
-    }
-    function quit() {
-        $.ajax({
-            url: "http://120.77.32.233/print/shop/out",
-            type: "POST",
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            dataType: 'json',
-            success: function (data) {
-                //alert("成功")
-            },
-            error: function (data) {
-                // alert("失败");
-            },
-            complete: function (data) {
-                alert("退出成功");
+}
+function quit() {
+    $.ajax({
+        url: "http://120.77.32.233/print/shop/out",
+        type: "POST",
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
+        dataType: 'json',
+        success: function (data) {
+            //alert("成功")
+        },
+        error: function (data) {
+            // alert("失败");
+        },
+        complete: function (data) {
+         alert("退出成功");
 
 
-            }
+        }
 
-        });
-    }
-</script>
-
-</body>
+    });
+}
+    </script>
+  </body>
 </html>

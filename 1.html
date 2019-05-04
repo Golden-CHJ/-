@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $.ajax({
+        url: "http://120.77.32.233/print/shop/login",
+        type: "post",
+        xhrFields: {
+            withCredentials: true
+        },
+        data: {
+          'phone': 1234567893,
+            'password':123456789
+        },
+        crossDomain: true,
+        dataType: 'json',
+        success: function (data) {
+            //alert("成功")
+        },
+        error: function (data) {
+            //alert("失败");
+        },
+        complete: function (data) {
+
+        }
+
+    });
+</script>
+</body>
+</html>
