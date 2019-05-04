@@ -110,12 +110,12 @@
           <div class="form-group" >
               <div class="selectgroup w-20">
                   <label class="selectgroup-item ">
-                      <input type="radio" name="value" value="2" class="selectgroup-input active" checked="" onclick="hasFinsh()">
-                      <span class="selectgroup-button ">已完成的订单</span>
+                      <input type="radio" name="value" value="2" class="selectgroup-input "  checked onclick="hasFinsh()">
+                      <span class="selectgroup-button" >已支付的订单</span>
                   </label>
                   <label class="selectgroup-item">
                       <input type="radio" name="value" value="1" class="selectgroup-input" onclick="noFinsh()">
-                      <span class="selectgroup-button ">尚未支付的订单</span>
+                      <span class="selectgroup-button ">尚未完成的订单</span>
                   </label>
 
               </div>
@@ -304,9 +304,10 @@
         }
 
     });
+
     function hasFinsh () {
         $.ajax({
-            url: "http://120.77.32.233/print/shop/list/order/1/0/0",
+            url: "http://120.77.32.233/print/shop/list/order/0/1/0",
             type: "POST",
             xhrFields: {
                 withCredentials: true
@@ -343,7 +344,7 @@
                         data1.data.list[i].orderinfo.createTime  +
                         "                  </td>\n" +
                         "                  <td>\n" +
-                        "                    <span class=\"status-icon bg-success\"></span> 已完成\n" +
+                        "                    <span class=\"status-icon bg-success\"></span> 已支付\n" +
                         "                  </td>\n" +
                         "                  <td>"+ data1.data.list[i].orderinfo.price+"</td>\n" +
                         "                </tr>"
@@ -357,7 +358,7 @@
     }
     function noFinsh(){
         $.ajax({
-            url: "http://120.77.32.233/print/shop/list/order/0/1/0",
+            url: "http://120.77.32.233/print/shop/list/order/0/0/0",
             type: "POST",
             xhrFields: {
                 withCredentials: true

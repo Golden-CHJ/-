@@ -105,6 +105,14 @@
               },
               complete: function (data) {
                   console.log(data);
+                  var data1 = $.parseJSON(data.responseText)
+                  if(data1.code==200){
+                      window.open("index.html");
+                  }
+                  else
+                  {
+                      alert("登录失败:"+data1.msg)
+                  }
 
               }
 

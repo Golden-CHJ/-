@@ -119,7 +119,7 @@
                 </label>
                 <label class="selectgroup-item">
                   <input type="radio" name="value" value="1" class="selectgroup-input" onclick="noFinsh()">
-                  <span class="selectgroup-button ">尚未支付的订单</span>
+                  <span class="selectgroup-button ">尚未完成的订单</span>
                 </label>
 
               </div>
@@ -250,7 +250,7 @@
       </footer>
     </div>
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-    <script type="text/javascript">
+    <script>
       $.ajax({
             url: "http://120.77.32.233/print/shop/list/order/1/0/1",
             type: "POST",
@@ -302,7 +302,7 @@
                 document.getElementById('t_d').innerText=data1.data.size;
                 document.getElementById('d').innerText=data1.data.size;
                 document.getElementById('t_m').innerText=data1.data.sum  ;
-
+                document.getElementById('d1').innerText="已完成单数";
             }
 
         });
