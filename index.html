@@ -48,29 +48,16 @@
               </a>
               <div class="d-flex order-lg-2 ml-auto">
 
-                <div class="dropdown d-none d-md-flex">
-                  <a class="nav-link icon" data-toggle="dropdown">
-                    <i class="fe fe-bell"></i>
-                    <span class="nav-unread"></span>
-                  </a>
-
-                </div>
                 <div class="dropdown">
                   <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                     <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
                     <span class="ml-2 d-none d-lg-block">
                       <span class="text-default">CHJ</span>
-                      <small class="text-muted d-block mt-1">地址：福州大学生活一区8号楼一层</small>
+                      <small class="text-muted d-block mt-1">地址：福州大学生活一区5号楼一层</small>
                     </span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                    <a class="dropdown-item" href="#">
-                      <i class="dropdown-icon fe fe-settings"></i> 设置
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <span class="float-right"><span class="badge badge-primary">6</span></span>
-                      <i class="dropdown-icon fe fe-mail"></i> 信息
-                    </a>
+
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">
                       <i class="dropdown-icon fe fe-log-out" onclick="quit()"></i> 退出当前用户
@@ -108,29 +95,17 @@
           <div class="container">
             <div class="page-header">
               <h1 class="page-title">
-                今日订单
+                订单
               </h1>
             </div>
             <div class="form-group" >
               <div class="selectgroup w-20">
-                <label class="selectgroup-item ">
-                  <input type="radio" name="value" value="2" class="selectgroup-input active" checked="" onclick="hasFinsh()">
-                  <span class="selectgroup-button ">已完成的订单</span>
-                </label>
-                <label class="selectgroup-item">
-                  <input type="radio" name="value" value="1" class="selectgroup-input" onclick="noFinsh()">
-                  <span class="selectgroup-button ">尚未完成的订单</span>
-                </label>
+                <button type="button" class="btn btn-default" onclick="hasFinsh()">未完成的订单</button>
+                <button type="button" class="btn btn-default" onclick="noFinsh()">未接受的订单</button>
+
 
               </div>
-              <div class="form-group col-lg-6">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="输入订单号完成订单" id="fin1">
-                  <span class="input-group-append">
-                              <button class="btn btn-primary" type="button" id="fin" onclick="fin()">完成订单</button>
-                            </span>
-                </div>
-              </div>
+
             </div>
             <div class="row row-cards">
               <div class="col-6 col-sm-4 col-lg-3">
@@ -161,7 +136,7 @@
                 <div class="card">
                   <div class="card-body p-3 text-center">
 
-                    <div class="h1 m-0" style="color: #2bcbba">5750</div>
+                    <div class="h1 m-0" style="color: #2bcbba" id="sum_d">5750</div>
                     <div class="text-muted mb-4">总单数</div>
                   </div>
                 </div>
@@ -169,7 +144,7 @@
               <div class="col-6 col-sm-4 col-lg-3">
                 <div class="card">
                   <div class="card-body p-3 text-center">
-                    <div class="h1 m-0" style="color: #5eba00">16833</div>
+                    <div class="h1 m-0" style="color: #5eba00" id="sum_p">16833</div>
                     <div class="text-muted mb-4">总收益（元）</div>
                   </div>
                 </div>
@@ -205,6 +180,21 @@
           </div>
         </div>
       </div>
+
+
+      <div class="container">
+
+
+        <ul class="pagination" id="page">
+
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+        </ul>
+
+      </div>
+
       <div class="footer">
         <div class="container">
           <div class="row">
@@ -251,8 +241,10 @@
     </div>
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
     <script>
-      $.ajax({
-            url: "http://120.77.32.233/print/shop/list/order/1/0/1",
+      var page=1;//页面数
+      var total_d=0;//订单总数
+        $.ajax({
+            url: "http://120.77.32.233/print/shop/list/order/receipt/1/0",
             type: "POST",
             xhrFields: {
                 withCredentials: true
@@ -263,35 +255,46 @@
                 //alert("成功")
             },
             error: function (data) {
-               // alert("失败");
+                // alert("失败");
             },
             complete: function (data) {
+
                 var data1 = $.parseJSON(data.responseText)
                 var div = document.getElementById("list");
                 while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
                 {
                     div.removeChild(div.firstChild);
                 }
-                for (i = 0; i < data1.data.size; i++) {
+
+                 total_d=Math.ceil(data1.data.list.length/4);
+                //alert(total_d);
+                 add_page(total_d);
+                for (i = 0; i <4; i++) {
+                    var bind=data1.data.list[i].orderinfo.bind;
+
+
+                    var x_id=data1.data.list[i].orderinfo.id;
                     var text = " <div class=\"card card-aside\">\n" +
-                        "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(./demo/photos/david-klaasen-54203-500.jpg)\"></a>\n" +
+                        "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(1.jpg)\"></a>\n" +
                         "                  <div class=\"card-body d-flex flex-column\">\n" +
-                        "                    <h4><a href=\"#\">文件名："+data1.data.list[i].file.name+
+                        "                    <h4><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>文件名："+data1.data.list[i].file.name+
                         "</a></h4>\n" +
                         "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
                         "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
                         "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                        "                    <h4 style=\"color:red\">优先级："+data1.data.list[i].orderinfo.priority+"</h4>\n" +
                         "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
-                        "                    <div class=\"text-muted\">文件大小："+data1.data.list[i].file.size+"</div>\n" +
+                        "                    <div class=\"text-muted\">订装方式："+bind+"</div>\n" +
                         "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
                         "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
                         "                      <div>\n" +
                         "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
-                        "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>已完成\n" +
-                        "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.createTime+"</small>\n" +
+                        "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+                        "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.takeTime+"</small>\n" +
                         "                      </div>\n" +
                         "                      <div class=\"ml-auto text-muted\">\n" +
                         "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                        "<button class=\"btn btn-success\" onclick='finish("+x_id+")'>完成订单</button>"+
                         "                      </div>\n" +
                         "                    </div>\n" +
                         "                  </div>\n" +
@@ -299,16 +302,73 @@
 
                     $('#list').append(text);
                 }
-                document.getElementById('t_d').innerText=data1.data.size;
-                document.getElementById('d').innerText=data1.data.size;
-                document.getElementById('t_m').innerText=data1.data.sum  ;
-                document.getElementById('d1').innerText="已完成单数";
+//                 for (i = 0; i < data1.data.list.length; i++) {
+//                     var x_id=data1.data[i].id;
+//                     var text = " <div class=\"card card-aside\">\n" +
+//                         "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(./demo/photos/david-klaasen-54203-500.jpg)\"></a>\n" +
+//                         "                  <div class=\"card-body d-flex flex-column\">\n" +
+//                         "                    <h4><a href=\"#\">文件名："+data1.data[i].name+
+//                         "</a></h4>\n" +
+//                         "                    <h4>学 校："+data1.data[i].college+"</h4>\n" +
+//                         "                    <h4>联系方式："+data1.data[i].phone+"</h4>\n" +
+//                         "                    <h4>份数："+data1.data[i].pageNum+"</h4>\n" +
+//                         "                    <h4 style=\"color:red\">优先级："+data1.data[i].priority+"</h4>\n" +
+//                         "                    <div class=\"text-muted\">备注："+data1.data[i].note+"</div>\n" +
+//                         "                    <div class=\"text-muted\">订装方式："+data1.data[i].bind+"</div>\n" +
+//                         "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+//                         "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+//                         "                      <div>\n" +
+//                         "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+//                         "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+//                         "                        <small class=\"d-block text-muted\">"+data1.data[i].takeTime+"</small>\n" +
+//                         "                      </div>\n" +
+//                         "                      <div class=\"ml-auto text-muted\">\n" +
+//                         "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data[i].price+"元</div>\n" +
+// "<button class=\"btn btn-success\" onclick='finish("+x_id+")'>完成订单</button>"+
+//                         "                      </div>\n" +
+//                         "                    </div>\n" +
+//                         "                  </div>\n" +
+//                         "                </div>"
+//
+//                     $('#list').append(text);
+//                 }
+
+
+
             }
 
-        });
+        })
+        $.ajax({
+            url: "http://120.77.32.233/print/shop/get/info",
+            type: "POST",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            dataType: 'json',
+            success: function (data) {
+                //alert("成功")
+            },
+            error: function (data) {
+                // alert("失败");
+            },
+            complete: function (data) {
+
+                var data1 = $.parseJSON(data.responseText)
+
+
+                document.getElementById('t_d').innerText=data1.data.todayNum;
+                document.getElementById('d').innerText=data1.data.accomplishNum;
+                document.getElementById('t_m').innerText=data1.data.todayPrice  ;
+                document.getElementById('sum_d').innerText=data1.data.totalNum      ;
+                document.getElementById('sum_p').innerText=data1.data.totalPrice.toFixed(2)  ;
+
+            }
+
+        })
       function hasFinsh () {
           $.ajax({
-              url: "http://120.77.32.233/print/shop/list/order/1/0/1",
+              url: "http://120.77.32.233/print/shop/list/order/receipt/1/0",
               type: "POST",
               xhrFields: {
                   withCredentials: true
@@ -322,32 +382,40 @@
                   // alert("失败");
               },
               complete: function (data) {
+
                   var data1 = $.parseJSON(data.responseText)
                   var div = document.getElementById("list");
                   while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
                   {
                       div.removeChild(div.firstChild);
                   }
-                  for (i = 0; i < data1.data.size; i++) {
+
+                  total_d=Math.ceil(data1.data.list.length/4);
+
+                  add_page(total_d);
+                  for (i = 0; i <4; i++) {
+                      var x_id=data1.data.list[i].orderinfo.id;
                       var text = " <div class=\"card card-aside\">\n" +
-                          "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(./demo/photos/david-klaasen-54203-500.jpg)\"></a>\n" +
+                          "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(1.jpg)\"></a>\n" +
                           "                  <div class=\"card-body d-flex flex-column\">\n" +
-                          "                    <h4><a href=\"#\">文件名："+data1.data.list[i].file.name+
+                          "                    <h4><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>文件名："+data1.data.list[i].file.name+
                           "</a></h4>\n" +
                           "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
                           "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
                           "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                          "                    <h4 style=\"color:red\">优先级："+data1.data.list[i].orderinfo.priority+"</h4>\n" +
                           "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
-                          "                    <div class=\"text-muted\">文件大小："+data1.data.list[i].file.size+"</div>\n" +
+                          "                    <div class=\"text-muted\">订装方式："+data1.data.list[i].orderinfo.bind+"</div>\n" +
                           "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
                           "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
                           "                      <div>\n" +
                           "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
-                          "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>已完成\n" +
-                          "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.createTime+"</small>\n" +
+                          "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+                          "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.takeTime+"</small>\n" +
                           "                      </div>\n" +
                           "                      <div class=\"ml-auto text-muted\">\n" +
                           "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                          "<button class=\"btn btn-success\" onclick='finish("+x_id+")'>完成订单</button>"+
                           "                      </div>\n" +
                           "                    </div>\n" +
                           "                  </div>\n" +
@@ -355,9 +423,38 @@
 
                       $('#list').append(text);
                   }
-                  document.getElementById('t_d').innerText=data1.data.size;
-                  document.getElementById('d').innerText=data1.data.size;
-                  document.getElementById('t_m').innerText=data1.data.sum  ;
+//                 for (i = 0; i < data1.data.list.length; i++) {
+//                     var x_id=data1.data[i].id;
+//                     var text = " <div class=\"card card-aside\">\n" +
+//                         "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(./demo/photos/david-klaasen-54203-500.jpg)\"></a>\n" +
+//                         "                  <div class=\"card-body d-flex flex-column\">\n" +
+//                         "                    <h4><a href=\"#\">文件名："+data1.data[i].name+
+//                         "</a></h4>\n" +
+//                         "                    <h4>学 校："+data1.data[i].college+"</h4>\n" +
+//                         "                    <h4>联系方式："+data1.data[i].phone+"</h4>\n" +
+//                         "                    <h4>份数："+data1.data[i].pageNum+"</h4>\n" +
+//                         "                    <h4 style=\"color:red\">优先级："+data1.data[i].priority+"</h4>\n" +
+//                         "                    <div class=\"text-muted\">备注："+data1.data[i].note+"</div>\n" +
+//                         "                    <div class=\"text-muted\">订装方式："+data1.data[i].bind+"</div>\n" +
+//                         "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+//                         "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+//                         "                      <div>\n" +
+//                         "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+//                         "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+//                         "                        <small class=\"d-block text-muted\">"+data1.data[i].takeTime+"</small>\n" +
+//                         "                      </div>\n" +
+//                         "                      <div class=\"ml-auto text-muted\">\n" +
+//                         "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data[i].price+"元</div>\n" +
+// "<button class=\"btn btn-success\" onclick='finish("+x_id+")'>完成订单</button>"+
+//                         "                      </div>\n" +
+//                         "                    </div>\n" +
+//                         "                  </div>\n" +
+//                         "                </div>"
+//
+//                     $('#list').append(text);
+//                 }
+
+
 
               }
 
@@ -365,7 +462,7 @@
       }
       function noFinsh(){
           $.ajax({
-              url: "http://120.77.32.233/print/shop/list/order/0/0/1",
+              url: "http://120.77.32.233/print/shop/list/order/receipt/0/0",
               type: "POST",
               xhrFields: {
                   withCredentials: true
@@ -385,26 +482,32 @@
                   {
                       div.removeChild(div.firstChild);
                   }
-                  for (i = 0; i < data1.data.size; i++) {
+                  total_d=Math.ceil(data1.data.list.length/4);
+               //   alert(total_d);
+                  add_page1(total_d);
+                  for (i = 0; i <4; i++) {
+                      var x_id=data1.data.list[i].orderinfo.id;
                       var text = " <div class=\"card card-aside\">\n" +
-                          "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(timg.jpg)\"></a>\n" +
+                          "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(1.jpg)\"></a>\n" +
                           "                  <div class=\"card-body d-flex flex-column\">\n" +
-                          "                    <h4><a href=\"#\">文件名："+data1.data.list[i].file.name+
+                          "                    <h4><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>文件名："+data1.data.list[i].file.name+
                           "</a></h4>\n" +
                           "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
                           "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
                           "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                          "                    <h4 style=\"color:red\">优先级："+data1.data.list[i].orderinfo.priority+"</h4>\n" +
                           "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
-                          "                    <div class=\"text-muted\">文件大小："+data1.data.list[i].file.size+"</div>\n" +
+                          "                    <div class=\"text-muted\">订装方式："+data1.data.list[i].orderinfo.bind+"</div>\n" +
                           "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
                           "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
                           "                      <div>\n" +
                           "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
-                          "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
-                          "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.createTime+"</small>\n" +
+                          "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未接受\n" +
+                          "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.takeTime+"</small>\n" +
                           "                      </div>\n" +
                           "                      <div class=\"ml-auto text-muted\">\n" +
                           "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                          "<button class=\"btn btn-success\" onclick='recieve("+x_id+")'>接受订单</button>"+
                           "                      </div>\n" +
                           "                    </div>\n" +
                           "                  </div>\n" +
@@ -412,13 +515,634 @@
 
                       $('#list').append(text);
                   }
-                  document.getElementById('d').innerText=data1.data.size;
-                  document.getElementById('d1').innerText="未完成单数";
-
 
               }
 
           });
+
+
+      }
+      function recieve(id) {
+          $.ajax({
+              url: "http://120.77.32.233/print/shop/order/receipt/"+id,
+              type: "POST",
+              xhrFields: {
+                  withCredentials: true
+              },
+              crossDomain: true,
+              dataType: 'json',
+              success: function (data) {
+                  //alert("成功")
+              },
+              error: function (data) {
+                  // alert("失败");
+              },
+              complete: function (data) {
+                  var data1 = $.parseJSON(data.responseText)
+                  var div = document.getElementById("list");
+if(data1.code==200){
+    alert("订单已接受");
+    $.ajax({
+        url: "http://120.77.32.233/print/shop/list/order/receipt/0/0",
+        type: "POST",
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
+        dataType: 'json',
+        success: function (data) {
+            // alert("成功")
+        },
+        error: function (data) {
+            //alert("失败");
+        },
+        complete: function (data) {
+            var data1 = $.parseJSON(data.responseText)
+            var div = document.getElementById("list");
+            while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+            {
+                div.removeChild(div.firstChild);
+            }
+            total_d=Math.ceil(data1.data.list.length/4);
+            //   alert(total_d);
+            add_page1(total_d);
+            for (i = 0; i <4; i++) {
+                var x_id=data1.data.list[i].orderinfo.id;
+                var text = " <div class=\"card card-aside\">\n" +
+                    "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(1.jpg)\"></a>\n" +
+                    "                  <div class=\"card-body d-flex flex-column\">\n" +
+                    "                    <h4><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>文件名："+data1.data.list[i].file.name+
+                    "</a></h4>\n" +
+                    "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
+                    "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
+                    "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                    "                    <h4 style=\"color:red\">优先级："+data1.data.list[i].orderinfo.priority+"</h4>\n" +
+                    "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
+                    "                    <div class=\"text-muted\">订装方式："+data1.data.list[i].orderinfo.bind+"</div>\n" +
+                    "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+                    "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+                    "                      <div>\n" +
+                    "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+                    "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未接受\n" +
+                    "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.takeTime+"</small>\n" +
+                    "                      </div>\n" +
+                    "                      <div class=\"ml-auto text-muted\">\n" +
+                    "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                    "<button class=\"btn btn-success\" onclick='recieve("+x_id+")'>接受订单</button>"+
+                    "                      </div>\n" +
+                    "                    </div>\n" +
+                    "                  </div>\n" +
+                    "                </div>"
+
+                $('#list').append(text);
+            }
+
+        }
+
+    });
+    $.ajax({
+        url: "http://120.77.32.233/print/shop/get/info",
+        type: "POST",
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
+        dataType: 'json',
+        success: function (data) {
+            //alert("成功")
+        },
+        error: function (data) {
+            // alert("失败");
+        },
+        complete: function (data) {
+
+            var data1 = $.parseJSON(data.responseText)
+
+
+            document.getElementById('t_d').innerText=data1.data.todayNum;
+            document.getElementById('d').innerText=data1.data.accomplishNum;
+            document.getElementById('t_m').innerText=data1.data.todayPrice  ;
+            document.getElementById('sum_d').innerText=data1.data.totalNum      ;
+            document.getElementById('sum_p').innerText=data1.data.totalPrice.toFixed(2)  ;
+
+        }
+
+    })
+}
+else
+{
+    alert("出错啦："+data1.msg);
+    $.ajax({
+        url: "http://120.77.32.233/print/shop/list/order/receipt/0/0",
+        type: "POST",
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
+        dataType: 'json',
+        success: function (data) {
+            // alert("成功")
+        },
+        error: function (data) {
+            //alert("失败");
+        },
+        complete: function (data) {
+            var data1 = $.parseJSON(data.responseText)
+            var div = document.getElementById("list");
+            while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+            {
+                div.removeChild(div.firstChild);
+            }
+            total_d=Math.ceil(data1.data.list.length/4);
+            //   alert(total_d);
+            add_page1(total_d);
+            for (i = 0; i <4; i++) {
+                var x_id=data1.data.list[i].orderinfo.id;
+                var text = " <div class=\"card card-aside\">\n" +
+                    "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(1.jpg)\"></a>\n" +
+                    "                  <div class=\"card-body d-flex flex-column\">\n" +
+                    "                    <h4><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>文件名："+data1.data.list[i].file.name+
+                    "</a></h4>\n" +
+                    "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
+                    "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
+                    "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                    "                    <h4 style=\"color:red\">优先级："+data1.data.list[i].orderinfo.priority+"</h4>\n" +
+                    "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
+                    "                    <div class=\"text-muted\">订装方式："+data1.data.list[i].orderinfo.bind+"</div>\n" +
+                    "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+                    "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+                    "                      <div>\n" +
+                    "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+                    "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未接受\n" +
+                    "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.takeTime+"</small>\n" +
+                    "                      </div>\n" +
+                    "                      <div class=\"ml-auto text-muted\">\n" +
+                    "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                    "<button class=\"btn btn-success\" onclick='recieve("+x_id+")'>接受订单</button>"+
+                    "                      </div>\n" +
+                    "                    </div>\n" +
+                    "                  </div>\n" +
+                    "                </div>"
+
+                $('#list').append(text);
+            }
+
+        }
+
+    });
+    $.ajax({
+        url: "http://120.77.32.233/print/shop/get/info",
+        type: "POST",
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
+        dataType: 'json',
+        success: function (data) {
+            //alert("成功")
+        },
+        error: function (data) {
+            // alert("失败");
+        },
+        complete: function (data) {
+
+            var data1 = $.parseJSON(data.responseText)
+
+
+            document.getElementById('t_d').innerText=data1.data.todayNum;
+            document.getElementById('d').innerText=data1.data.accomplishNum;
+            document.getElementById('t_m').innerText=data1.data.todayPrice  ;
+            document.getElementById('sum_d').innerText=data1.data.totalNum      ;
+            document.getElementById('sum_p').innerText=data1.data.totalPrice.toFixed(2)  ;
+
+        }
+
+    })
+}
+              }
+
+          })
+      }
+        function finish(id) {
+            $.ajax({
+                url: "http://120.77.32.233/print/shop/order/accomplish/"+id,
+                type: "POST",
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                dataType: 'json',
+                success: function (data) {
+                    //alert("成功")
+                },
+                error: function (data) {
+                    // alert("失败");
+                },
+                complete: function (data) {
+                    var data1 = $.parseJSON(data.responseText)
+                    var div = document.getElementById("list");
+                    if(data1.code==200){
+                        alert("订单已完成");
+                        $.ajax({
+                            url: "http://120.77.32.233/print/shop/list/order/receipt/1/0",
+                            type: "POST",
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            crossDomain: true,
+                            dataType: 'json',
+                            success: function (data) {
+                                //alert("成功")
+                            },
+                            error: function (data) {
+                                // alert("失败");
+                            },
+                            complete: function (data) {
+
+                                var data1 = $.parseJSON(data.responseText)
+                                var div = document.getElementById("list");
+                                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                                {
+                                    div.removeChild(div.firstChild);
+                                }
+
+                                total_d=Math.ceil(data1.data.list.length/4);
+
+                                add_page(total_d);
+                                for (i = 0; i <4; i++) {
+                                    var x_id=data1.data.list[i].orderinfo.id;
+                                    var text = " <div class=\"card card-aside\">\n" +
+                                        "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(1.jpg)\"></a>\n" +
+                                        "                  <div class=\"card-body d-flex flex-column\">\n" +
+                                        "                    <h4><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>文件名："+data1.data.list[i].file.name+
+                                        "</a></h4>\n" +
+                                        "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
+                                        "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
+                                        "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                                        "                    <h4 style=\"color:red\">优先级："+data1.data.list[i].orderinfo.priority+"</h4>\n" +
+                                        "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
+                                        "                    <div class=\"text-muted\">订装方式："+data1.data.list[i].orderinfo.bind+"</div>\n" +
+                                        "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+                                        "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+                                        "                      <div>\n" +
+                                        "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+                                        "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+                                        "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.takeTime+"</small>\n" +
+                                        "                      </div>\n" +
+                                        "                      <div class=\"ml-auto text-muted\">\n" +
+                                        "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                                        "<button class=\"btn btn-success\" onclick='finish("+x_id+")'>完成订单</button>"+
+                                        "                      </div>\n" +
+                                        "                    </div>\n" +
+                                        "                  </div>\n" +
+                                        "                </div>"
+
+                                    $('#list').append(text);
+                                }
+//                 for (i = 0; i < data1.data.list.length; i++) {
+//                     var x_id=data1.data[i].id;
+//                     var text = " <div class=\"card card-aside\">\n" +
+//                         "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(./demo/photos/david-klaasen-54203-500.jpg)\"></a>\n" +
+//                         "                  <div class=\"card-body d-flex flex-column\">\n" +
+//                         "                    <h4><a href=\"#\">文件名："+data1.data[i].name+
+//                         "</a></h4>\n" +
+//                         "                    <h4>学 校："+data1.data[i].college+"</h4>\n" +
+//                         "                    <h4>联系方式："+data1.data[i].phone+"</h4>\n" +
+//                         "                    <h4>份数："+data1.data[i].pageNum+"</h4>\n" +
+//                         "                    <h4 style=\"color:red\">优先级："+data1.data[i].priority+"</h4>\n" +
+//                         "                    <div class=\"text-muted\">备注："+data1.data[i].note+"</div>\n" +
+//                         "                    <div class=\"text-muted\">订装方式："+data1.data[i].bind+"</div>\n" +
+//                         "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+//                         "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+//                         "                      <div>\n" +
+//                         "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+//                         "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+//                         "                        <small class=\"d-block text-muted\">"+data1.data[i].takeTime+"</small>\n" +
+//                         "                      </div>\n" +
+//                         "                      <div class=\"ml-auto text-muted\">\n" +
+//                         "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data[i].price+"元</div>\n" +
+// "<button class=\"btn btn-success\" onclick='finish("+x_id+")'>完成订单</button>"+
+//                         "                      </div>\n" +
+//                         "                    </div>\n" +
+//                         "                  </div>\n" +
+//                         "                </div>"
+//
+//                     $('#list').append(text);
+//                 }
+
+
+
+                            }
+
+                        })
+                        $.ajax({
+                            url: "http://120.77.32.233/print/shop/get/info",
+                            type: "POST",
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            crossDomain: true,
+                            dataType: 'json',
+                            success: function (data) {
+                                //alert("成功")
+                            },
+                            error: function (data) {
+                                // alert("失败");
+                            },
+                            complete: function (data) {
+
+                                var data1 = $.parseJSON(data.responseText)
+
+
+                                document.getElementById('t_d').innerText=data1.data.todayNum;
+                                document.getElementById('d').innerText=data1.data.accomplishNum;
+                                document.getElementById('t_m').innerText=data1.data.todayPrice  ;
+                                document.getElementById('sum_d').innerText=data1.data.totalNum      ;
+                                document.getElementById('sum_p').innerText=data1.data.totalPrice.toFixed(2)  ;
+
+                            }
+
+                        })
+                    }
+                    else
+                    {
+                        alert("出错啦："+data1.msg);
+                        $.ajax({
+                            url: "http://120.77.32.233/print/shop/list/order/receipt/1/0",
+                            type: "POST",
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            crossDomain: true,
+                            dataType: 'json',
+                            success: function (data) {
+                                //alert("成功")
+                            },
+                            error: function (data) {
+                                // alert("失败");
+                            },
+                            complete: function (data) {
+
+                                var data1 = $.parseJSON(data.responseText)
+                                var div = document.getElementById("list");
+                                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                                {
+                                    div.removeChild(div.firstChild);
+                                }
+
+                                total_d=Math.ceil(data1.data.list.length/4);
+
+                                add_page(total_d);
+                                for (i = 0; i <4; i++) {
+                                    var x_id=data1.data.list[i].orderinfo.id;
+                                    var text = " <div class=\"card card-aside\">\n" +
+                                        "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(1.jpg)\"></a>\n" +
+                                        "                  <div class=\"card-body d-flex flex-column\">\n" +
+                                        "                    <h4><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>文件名："+data1.data.list[i].file.name+
+                                        "</a></h4>\n" +
+                                        "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
+                                        "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
+                                        "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                                        "                    <h4 style=\"color:red\">优先级："+data1.data.list[i].orderinfo.priority+"</h4>\n" +
+                                        "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
+                                        "                    <div class=\"text-muted\">订装方式："+data1.data.list[i].orderinfo.bind+"</div>\n" +
+                                        "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+                                        "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+                                        "                      <div>\n" +
+                                        "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+                                        "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+                                        "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.takeTime+"</small>\n" +
+                                        "                      </div>\n" +
+                                        "                      <div class=\"ml-auto text-muted\">\n" +
+                                        "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                                        "<button class=\"btn btn-success\" onclick='finish("+x_id+")'>完成订单</button>"+
+                                        "                      </div>\n" +
+                                        "                    </div>\n" +
+                                        "                  </div>\n" +
+                                        "                </div>"
+
+                                    $('#list').append(text);
+                                }
+//                 for (i = 0; i < data1.data.list.length; i++) {
+//                     var x_id=data1.data[i].id;
+//                     var text = " <div class=\"card card-aside\">\n" +
+//                         "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(./demo/photos/david-klaasen-54203-500.jpg)\"></a>\n" +
+//                         "                  <div class=\"card-body d-flex flex-column\">\n" +
+//                         "                    <h4><a href=\"#\">文件名："+data1.data[i].name+
+//                         "</a></h4>\n" +
+//                         "                    <h4>学 校："+data1.data[i].college+"</h4>\n" +
+//                         "                    <h4>联系方式："+data1.data[i].phone+"</h4>\n" +
+//                         "                    <h4>份数："+data1.data[i].pageNum+"</h4>\n" +
+//                         "                    <h4 style=\"color:red\">优先级："+data1.data[i].priority+"</h4>\n" +
+//                         "                    <div class=\"text-muted\">备注："+data1.data[i].note+"</div>\n" +
+//                         "                    <div class=\"text-muted\">订装方式："+data1.data[i].bind+"</div>\n" +
+//                         "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+//                         "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+//                         "                      <div>\n" +
+//                         "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+//                         "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+//                         "                        <small class=\"d-block text-muted\">"+data1.data[i].takeTime+"</small>\n" +
+//                         "                      </div>\n" +
+//                         "                      <div class=\"ml-auto text-muted\">\n" +
+//                         "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data[i].price+"元</div>\n" +
+// "<button class=\"btn btn-success\" onclick='finish("+x_id+")'>完成订单</button>"+
+//                         "                      </div>\n" +
+//                         "                    </div>\n" +
+//                         "                  </div>\n" +
+//                         "                </div>"
+//
+//                     $('#list').append(text);
+//                 }
+
+
+
+                            }
+
+                        })
+                        $.ajax({
+                            url: "http://120.77.32.233/print/shop/get/info",
+                            type: "POST",
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            crossDomain: true,
+                            dataType: 'json',
+                            success: function (data) {
+                                //alert("成功")
+                            },
+                            error: function (data) {
+                                // alert("失败");
+                            },
+                            complete: function (data) {
+
+                                var data1 = $.parseJSON(data.responseText)
+
+
+                                document.getElementById('t_d').innerText=data1.data.todayNum;
+                                document.getElementById('d').innerText=data1.data.accomplishNum;
+                                document.getElementById('t_m').innerText=data1.data.todayPrice  ;
+                                document.getElementById('sum_d').innerText=data1.data.totalNum      ;
+                                document.getElementById('sum_p').innerText=data1.data.totalPrice.toFixed(2)  ;
+
+                            }
+
+                        })
+                    }
+                }
+
+            })
+        }
+        function add_page(num) {
+            var div = document.getElementById("page");
+            while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+            {
+                div.removeChild(div.firstChild);
+            }
+            for(i=1;i<=num;i++) {
+                var text = " <li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick='pickPage1("+i+")'>" + i + "</a></li>"
+                $('#page').append(text);
+            }
+
+        }
+      function add_page1(num) {
+          var div = document.getElementById("page");
+          while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+          {
+              div.removeChild(div.firstChild);
+          }
+          for(i=1;i<=num;i++) {
+              var text = " <li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick='pickPage2("+i+")'>" + i + "</a></li>"
+              $('#page').append(text);
+          }
+
+      }
+        function pickPage1(x) {
+            x=x-1;
+            $.ajax({
+                url: "http://120.77.32.233/print/shop/list/order/receipt/1/0",
+                type: "POST",
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                dataType: 'json',
+                success: function (data) {
+                    //alert("成功")
+                },
+                error: function (data) {
+                    // alert("失败");
+                },
+                complete: function (data) {
+
+                    var data1 = $.parseJSON(data.responseText)
+                    var div = document.getElementById("list");
+                    while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                    {
+                        div.removeChild(div.firstChild);
+                    }
+
+
+
+                for (i = 4*x; i < 4*x+4; i++) {
+                    var x_id=data1.data.list[i].orderinfo.id;
+                    var text = " <div class=\"card card-aside\">\n" +
+                        "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(1.jpg)\"></a>\n" +
+                        "                  <div class=\"card-body d-flex flex-column\">\n" +
+                        "                    <h4><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>文件名："+data1.data.list[i].file.name+
+                        "</a></h4>\n" +
+                        "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
+                        "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
+                        "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                        "                    <h4 style=\"color:red\">优先级："+data1.data.list[i].orderinfo.priority+"</h4>\n" +
+                        "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
+                        "                    <div class=\"text-muted\">订装方式："+data1.data.list[i].orderinfo.bind+"</div>\n" +
+                        "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+                        "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+                        "                      <div>\n" +
+                        "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+                        "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+                        "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.takeTime+"</small>\n" +
+                        "                      </div>\n" +
+                        "                      <div class=\"ml-auto text-muted\">\n" +
+                        "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+"<button class=\"btn btn-success\" onclick='finish("+x_id+")'>完成订单</button>"+
+                        "                      </div>\n" +
+                        "                    </div>\n" +
+                        "                  </div>\n" +
+                        "                </div>"
+
+                    $('#list').append(text);
+                }
+
+
+
+                }
+
+            })
+        }
+      function pickPage2(x) {
+            x=x-1;
+          $.ajax({
+              url: "http://120.77.32.233/print/shop/list/order/receipt/0/0",
+              type: "POST",
+              xhrFields: {
+                  withCredentials: true
+              },
+              crossDomain: true,
+              dataType: 'json',
+              success: function (data) {
+                  //alert("成功")
+              },
+              error: function (data) {
+                  // alert("失败");
+              },
+              complete: function (data) {
+
+                  var data1 = $.parseJSON(data.responseText)
+                  var div = document.getElementById("list");
+                  while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                  {
+                      div.removeChild(div.firstChild);
+                  }
+
+
+
+                  for (i = 4*x; i < 4*x+4; i++) {
+                      var x_id=data1.data.list[i].orderinfo.id;
+                      var text = " <div class=\"card card-aside\">\n" +
+                          "                  <a href=\"#\" class=\"card-aside-column\" style=\"background-image: url(1.jpg)\"></a>\n" +
+                          "                  <div class=\"card-body d-flex flex-column\">\n" +
+                          "                    <h4><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>文件名："+data1.data.list[i].file.name+
+                          "</a></h4>\n" +
+                          "                    <h4>学 校："+data1.data.list[i].orderinfo.college+"</h4>\n" +
+                          "                    <h4>联系方式："+data1.data.list[i].orderinfo.phone+"</h4>\n" +
+                          "                    <h4>份数："+data1.data.list[i].orderinfo.pageNum+"</h4>\n" +
+                          "                    <h4 style=\"color:red\">优先级："+data1.data.list[i].orderinfo.priority+"</h4>\n" +
+                          "                    <div class=\"text-muted\">备注："+data1.data.list[i].orderinfo.note+"</div>\n" +
+                          "                    <div class=\"text-muted\">订装方式："+data1.data.list[i].orderinfo.bind+"</div>\n" +
+                          "                    <div class=\"d-flex align-items-center pt-5 mt-auto\">\n" +
+                          "                      <!--<div class=\"avatar avatar-md mr-3\" ></div>-->\n" +
+                          "                      <div>\n" +
+                          "                        <i class=\"fe fe-check text-success mr-2\" aria-hidden=\"true\"></i>需要配送\n" +
+                          "                        <i class=\"fe fe-x text-danger mr-2\" aria-hidden=\"true\"></i>未完成\n" +
+                          "                        <small class=\"d-block text-muted\">"+data1.data.list[i].orderinfo.takeTime+"</small>\n" +
+                          "                      </div>\n" +
+                          "                      <div class=\"ml-auto text-muted\">\n" +
+                          "                        <div class=\"display-2 my-2\" style=\"color: #5eba00\">"+data1.data.list[i].orderinfo.price+"元</div>\n" +
+                          "<button class=\"btn btn-success\" onclick='recieve("+x_id+")'>接受订单</button>"+
+                          "                      </div>\n" +
+                          "                    </div>\n" +
+                          "                  </div>\n" +
+                          "                </div>"
+
+                      $('#list').append(text);
+                  }
+
+
+
+              }
+
+          })
       }
 function fin() {
           a=document.getElementById('fin1').value;
