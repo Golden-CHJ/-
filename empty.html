@@ -46,19 +46,13 @@
           </a>
           <div class="d-flex order-lg-2 ml-auto">
 
-            <div class="dropdown d-none d-md-flex">
-              <a class="nav-link icon" data-toggle="dropdown">
-                <i class="fe fe-bell"></i>
-                <span class="nav-unread"></span>
-              </a>
 
-            </div>
             <div class="dropdown">
               <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                 <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
                 <span class="ml-2 d-none d-lg-block">
                       <span class="text-default">CHJ</span>
-                      <small class="text-muted d-block mt-1">地址：福州大学生活一区8号楼一层</small>
+                      <small class="text-muted d-block mt-1">地址：福州大学生活一区5号楼一层</small>
                     </span>
               </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -107,19 +101,19 @@
           </h1>
 
         </div>
-          <div class="form-group" >
-              <div class="selectgroup w-20">
-                  <label class="selectgroup-item ">
-                      <input type="radio" name="value" value="2" class="selectgroup-input "  checked onclick="hasFinsh()">
-                      <span class="selectgroup-button" >已支付的订单</span>
-                  </label>
-                  <label class="selectgroup-item">
-                      <input type="radio" name="value" value="1" class="selectgroup-input" onclick="noFinsh()">
-                      <span class="selectgroup-button ">尚未完成的订单</span>
-                  </label>
+          <!--<div class="form-group" >-->
+              <!--<div class="selectgroup w-20">-->
+                  <!--<label class="selectgroup-item ">-->
+                      <!--<input type="radio" name="value" value="2" class="selectgroup-input "  checked onclick="hasFinsh()">-->
+                      <!--<span class="selectgroup-button" >已支付的订单</span>-->
+                  <!--</label>-->
+                  <!--<label class="selectgroup-item">-->
+                      <!--<input type="radio" name="value" value="1" class="selectgroup-input" onclick="noFinsh()">-->
+                      <!--<span class="selectgroup-button ">尚未完成的订单</span>-->
+                  <!--</label>-->
 
-              </div>
-          </div>
+              <!--</div>-->
+          <!--</div>-->
         <div class="col-12">
           <div class="card">
 
@@ -209,6 +203,18 @@
       </div>
     </div>
   </div>
+    <div class="container">
+
+
+        <ul class="pagination" id="page">
+
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+        </ul>
+
+    </div>
   <div class="footer">
     <div class="container">
       <div class="row">
@@ -233,6 +239,7 @@
       </div>
     </div>
   </div>
+
   <footer class="footer">
     <div class="container">
       <div class="row align-items-center flex-row-reverse">
@@ -256,7 +263,7 @@
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script>
     $.ajax({
-        url: "http://120.77.32.233/print/shop/list/order/1/0/0",
+        url: "http://120.77.32.233/print/shop/list/order/receipt/1/1",
         type: "POST",
         xhrFields: {
             withCredentials: true
@@ -276,136 +283,147 @@
             {
                 div.removeChild(div.firstChild);
             }
-            for (i = 0; i < data1.data.size; i++) {
-                var text=" <tr>\n" +
-                    "                  <td><span class=\"text-muted\">"+data1.data.list[i].file.id+"</span></td>\n" +
-                    "                  <td><a href=\"invoice.html\" class=\"text-inherit\">"+data1.data.list[i].file.name+"</a></td>\n" +
-                    "                  <td>\n" +
-                                       data1.data.list[i].orderinfo.phone  +
-                    "                  </td>\n" +
-                    "                  <td>\n" +
-                    data1.data.list[i].orderinfo.college  +
-                    "                  </td>\n" +
-                    "                  <td>\n" +
-                    data1.data.list[i].orderinfo.num  +
-                    "                  </td>\n" +
-                    "                  <td>\n" +
-                    data1.data.list[i].orderinfo.createTime  +
-                    "                  </td>\n" +
-                    "                  <td>\n" +
-                    "                    <span class=\"status-icon bg-success\"></span> 已完成\n" +
-                    "                  </td>\n" +
-                    "                  <td>"+ data1.data.list[i].orderinfo.price+"</td>\n" +
-                    "                </tr>"
+            if(data1.code==200) {
+                total_d = Math.ceil(data1.data.list.length / 10);
+                // alert(total_d);
+                add_page(total_d);
+                for (i = 0; i < 10; i++) {
+                    var text = " <tr>\n" +
+                        "                  <td><span class=\"text-muted\">" + data1.data.list[i].orderinfo.id + "</span></td>\n" +
+                        "                  <td><a href='http://120.77.32.233/print/shop/download/" + data1.data.list[i].orderinfo.fileId + "'>" + data1.data.list[i].file.name + "</a></td>\n" +
+                        "                  <td>\n" +
+                        data1.data.list[i].orderinfo.phone +
+                        "                  </td>\n" +
+                        "                  <td>\n" +
+                        data1.data.list[i].orderinfo.college +
+                        "                  </td>\n" +
+                        "                  <td>\n" +
+                        data1.data.list[i].orderinfo.num +
+                        "                  </td>\n" +
+                        "                  <td>\n" +
+                        data1.data.list[i].orderinfo.takeTime +
+                        "                  </td>\n" +
+                        "                  <td>\n" +
+                        "                    <span class=\"status-icon bg-success\"></span> 已完成\n" +
+                        "                  </td>\n" +
+                        "                  <td>" + data1.data.list[i].orderinfo.price + "</td>\n" +
+                        "                </tr>"
 
-                $('#list').append(text);
+
+                    $('#list').append(text);
+                }
+            }
+            else
+            {
+                alert("请先登录");
+                window.location("login.html");
             }
 
         }
 
     });
 
-    function hasFinsh () {
-        $.ajax({
-            url: "http://120.77.32.233/print/shop/list/order/0/1/0",
-            type: "POST",
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            dataType: 'json',
-            success: function (data) {
-                //alert("成功")
-            },
-            error: function (data) {
-                //alert("失败");
-            },
-            complete: function (data) {
-                var data1 = $.parseJSON(data.responseText)
-                var div = document.getElementById("list");
-                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
-                {
-                    div.removeChild(div.firstChild);
-                }
-                for (i = 0; i < data1.data.size; i++) {
-                    var text=" <tr>\n" +
-                        "                  <td><span class=\"text-muted\">"+data1.data.list[i].file.id+"</span></td>\n" +
-                        "                  <td><a href=\"invoice.html\" class=\"text-inherit\">"+data1.data.list[i].file.name+"</a></td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.phone  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.college  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.num  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.createTime  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        "                    <span class=\"status-icon bg-success\"></span> 已支付\n" +
-                        "                  </td>\n" +
-                        "                  <td>"+ data1.data.list[i].orderinfo.price+"</td>\n" +
-                        "                </tr>"
-
-                    $('#list').append(text);
-                }
-
-            }
-
-        });
-    }
-    function noFinsh(){
-        $.ajax({
-            url: "http://120.77.32.233/print/shop/list/order/0/0/0",
-            type: "POST",
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            dataType: 'json',
-            success: function (data) {
-                // alert("成功")
-            },
-            error: function (data) {
-                //alert("失败");
-            },
-            complete: function (data) {
-                var data1 = $.parseJSON(data.responseText)
-                var div = document.getElementById("list");
-                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
-                {
-                    div.removeChild(div.firstChild);
-                }
-                for (i = 0; i < data1.data.size; i++) {
-                    var text=" <tr>\n" +
-                        "                  <td><span class=\"text-muted\">"+data1.data.list[i].file.id+"</span></td>\n" +
-                        "                  <td><a href=\"invoice.html\" class=\"text-inherit\">"+data1.data.list[i].file.name+"</a></td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.phone  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.college  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.num  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        data1.data.list[i].orderinfo.createTime  +
-                        "                  </td>\n" +
-                        "                  <td>\n" +
-                        "                    <span class=\"status-icon bg-danger\"></span>未完成\n" +
-                        "                  </td>\n" +
-                        "                  <td>"+ data1.data.list[i].orderinfo.price+"</td>\n" +
-                        "                </tr>"
-                    $('#list').append(text);
-                }
-
-            }
-
-        });
-    }
+    // function hasFinsh () {
+    //     $.ajax({
+    //         url: "http://120.77.32.233/print/shop/list/order/0/1/0",
+    //         type: "POST",
+    //         xhrFields: {
+    //             withCredentials: true
+    //         },
+    //         crossDomain: true,
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             //alert("成功")
+    //         },
+    //         error: function (data) {
+    //             //alert("失败");
+    //         },
+    //         complete: function (data) {
+    //             var data1 = $.parseJSON(data.responseText)
+    //             var div = document.getElementById("list");
+    //             while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+    //             {
+    //                 div.removeChild(div.firstChild);
+    //             }
+    //             for (i = 0; i < data1.data.size; i++) {
+    //                 var text=" <tr>\n" +
+    //                     "                  <td><span class=\"text-muted\">"+data1.data.list[i].file.id+"</span></td>\n" +
+    //                     "                  <td><a href=\"invoice.html\" class=\"text-inherit\">"+data1.data.list[i].file.name+"</a></td>\n" +
+    //                     "                  <td>\n" +
+    //                     data1.data.list[i].orderinfo.phone  +
+    //                     "                  </td>\n" +
+    //                     "                  <td>\n" +
+    //                     data1.data.list[i].orderinfo.college  +
+    //                     "                  </td>\n" +
+    //                     "                  <td>\n" +
+    //                     data1.data.list[i].orderinfo.num  +
+    //                     "                  </td>\n" +
+    //                     "                  <td>\n" +
+    //                     data1.data.list[i].orderinfo.createTime  +
+    //                     "                  </td>\n" +
+    //                     "                  <td>\n" +
+    //                     "                    <span class=\"status-icon bg-success\"></span> 已完成\n" +
+    //                     "                  </td>\n" +
+    //                     "                  <td>"+ data1.data.list[i].orderinfo.price+"</td>\n" +
+    //                     "                </tr>"
+    //
+    //                 $('#list').append(text);
+    //             }
+    //
+    //         }
+    //
+    //     });
+    // }
+    // function noFinsh(){
+    //     $.ajax({
+    //         url: "http://120.77.32.233/print/shop/list/order/0/0/0",
+    //         type: "POST",
+    //         xhrFields: {
+    //             withCredentials: true
+    //         },
+    //         crossDomain: true,
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             // alert("成功")
+    //         },
+    //         error: function (data) {
+    //             //alert("失败");
+    //         },
+    //         complete: function (data) {
+    //             var data1 = $.parseJSON(data.responseText)
+    //             var div = document.getElementById("list");
+    //             while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+    //             {
+    //                 div.removeChild(div.firstChild);
+    //             }
+    //             for (i = 0; i < data1.data.size; i++) {
+    //                 var text=" <tr>\n" +
+    //                     "                  <td><span class=\"text-muted\">"+data1.data.list[i].file.id+"</span></td>\n" +
+    //                     "                  <td><a href=\"invoice.html\" class=\"text-inherit\">"+data1.data.list[i].file.name+"</a></td>\n" +
+    //                     "                  <td>\n" +
+    //                     data1.data.list[i].orderinfo.phone  +
+    //                     "                  </td>\n" +
+    //                     "                  <td>\n" +
+    //                     data1.data.list[i].orderinfo.college  +
+    //                     "                  </td>\n" +
+    //                     "                  <td>\n" +
+    //                     data1.data.list[i].orderinfo.num  +
+    //                     "                  </td>\n" +
+    //                     "                  <td>\n" +
+    //                     data1.data.list[i].orderinfo.createTime  +
+    //                     "                  </td>\n" +
+    //                     "                  <td>\n" +
+    //                     "                    <span class=\"status-icon bg-danger\"></span>未完成\n" +
+    //                     "                  </td>\n" +
+    //                     "                  <td>"+ data1.data.list[i].orderinfo.price+"</td>\n" +
+    //                     "                </tr>"
+    //                 $('#list').append(text);
+    //             }
+    //
+    //         }
+    //
+    //     });
+    // }
     function quit() {
         $.ajax({
             url: "http://120.77.32.233/print/shop/out",
@@ -428,6 +446,79 @@
             }
 
         });
+    }
+    function add_page(num) {
+        var div = document.getElementById("page");
+        while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+        {
+            div.removeChild(div.firstChild);
+        }
+        for(i=1;i<=num;i++) {
+            var text = " <li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick='pickPage1("+i+")'>" + i + "</a></li>"
+            $('#page').append(text);
+        }
+
+    }
+    function pickPage1(x) {
+        x=x-1;
+        $.ajax({
+            url: "http://120.77.32.233/print/shop/list/order/receipt/1/1",
+            type: "POST",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            dataType: 'json',
+            success: function (data) {
+                //alert("成功")
+            },
+            error: function (data) {
+                // alert("失败");
+            },
+            complete: function (data) {
+
+                var data1 = $.parseJSON(data.responseText)
+                var div = document.getElementById("list");
+                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+
+
+
+                for (i = 10*x; i < 10*x+10; i++) {
+                    var text=" <tr>\n" +
+                        "                  <td><span class=\"text-muted\">"+data1.data.list[i].orderinfo.id+"</span></td>\n" +
+                        "                  <td><a href='http://120.77.32.233/print/shop/download/"+data1.data.list[i].orderinfo.fileId+"'>"+data1.data.list[i].file.name+"</a></td>\n" +
+                        "                  <td>\n" +
+                        data1.data.list[i].orderinfo.phone  +
+                        "                  </td>\n" +
+                        "                  <td>\n" +
+                        data1.data.list[i].orderinfo.college  +
+                        "                  </td>\n" +
+                        "                  <td>\n" +
+                        data1.data.list[i].orderinfo.num  +
+                        "                  </td>\n" +
+                        "                  <td>\n" +
+                        data1.data.list[i].orderinfo.takeTime  +
+                        "                  </td>\n" +
+                        "                  <td>\n" +
+                        "                    <span class=\"status-icon bg-success\"></span> 已完成\n" +
+                        "                  </td>\n" +
+                        "                  <td>"+data1.data.list[i].orderinfo.price+"</td>\n" +
+                        "                </tr>"
+
+
+
+
+                    $('#list').append(text);
+                }
+
+
+
+            }
+
+        })
     }
 </script>
 
